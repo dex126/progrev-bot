@@ -1,0 +1,13 @@
+import os
+
+import dotenv
+
+dotenv.load_dotenv()
+
+
+class Settings:
+    TELEGRAM_BOTAPI_TOKEN = os.environ["TELEGRAM_BOTAPI_TOKEN"]
+    TELEGRAM_TARGET_CHANNEL_USERNAME = os.environ["TELEGRAM_TARGET_CHANNEL_USERNAME"]
+    TELEGRAM_ADMIN_IDS = os.environ["TELEGRAM_ADMIN_IDS"]
+    TELEGRAM_VIDEO_FILE_ID = os.environ["TELEGRAM_VIDEO_FILE_ID"]
+    MONGO_CONNECTION_STRING = os.environ["MONGO_CONNECTION_STRING"]

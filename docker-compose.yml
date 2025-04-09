@@ -1,0 +1,32 @@
+networks:
+  nutra:
+    name: nutra_network
+
+volumes:
+  nutra-data:
+
+services:
+  mongodb:
+    container_name: nutra_mongo
+    hostname: nutra_mongo
+    image: mongo
+    restart: unless-stopped
+    volumes:
+      - ./mongo:/data/db
+    networks:
+      - nutra
+
+  nutra:
+    depends_on:
+      - mongodb
+    container_name: nutra_bot
+    hostname: nutra
+    image: nutra_bot:latest
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - SR_MONGO_CONNECTION_STRING=mongodb://nutra_mongo:27017
+    build:
+      context: .
+    networks:
+      - nutra

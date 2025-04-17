@@ -140,7 +140,7 @@ class ReminderService:
 
         await self.__scheduler_service.set_remind_message(
             user_id=user_id,
-            run_date=(datetime.now() + timedelta(seconds=1)),
+            run_date=(datetime.now() + timedelta(days=1)),
             text=Template.REMIND_TEXT.render(
                 type_=RemindType.PRACTICUM_PAYMENT_1D,
                 discount_percent=practicum_data[0].discount_percent,
@@ -151,7 +151,7 @@ class ReminderService:
 
         await self.__scheduler_service.set_remind_message(
             user_id=user_id,
-            run_date=(datetime.now() + timedelta(seconds=2)),
+            run_date=(datetime.now() + timedelta(days=2)),
             text=Template.REMIND_TEXT.render(
                 type_=RemindType.PRACTICUM_PAYMENT_2D,
                 discount_percent=practicum_data[0].discount_percent,

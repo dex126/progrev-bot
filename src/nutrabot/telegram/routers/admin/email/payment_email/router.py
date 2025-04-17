@@ -1,4 +1,7 @@
+import contextlib
+
 from aiogram import Bot, F, Router, types
+from aiogram.exceptions import TelegramForbiddenError
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
@@ -126,15 +129,16 @@ class PaymentEmailRouter(Router):
     ) -> None:
         practicum_data = await self.__practicum_service.get()
 
-        await self.__bot.send_message(
-            chat_id=destination_chat_id,
-            text=Template.REMIND_TEXT.render(
-                type_=RemindType.PRACTICUM_PAYMENT_0D,
-                discount_percent=practicum_data.discount_percent,
-                promocode=practicum_data.promocode_text,
-            ),
-        )
+        with contextlib.suppress(TelegramForbiddenError):
+            await self.__bot.send_message(
+                chat_id=destination_chat_id,
+                text=Template.REMIND_TEXT.render(
+                    type_=RemindType.PRACTICUM_PAYMENT_0D,
+                    discount_percent=practicum_data.discount_percent,
+                    promocode=practicum_data.promocode_text,
+                ),
+            )
 
-        await self.__remind_service.set_practicum_payment_remind(
-            user_id=destination_chat_id,
-        )
+            await self.__remind_service.set_practicum_payment_remind(
+                user_id=destination_chat_id,
+            )

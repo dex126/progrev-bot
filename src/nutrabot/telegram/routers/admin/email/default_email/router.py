@@ -1,6 +1,8 @@
+import contextlib
 from typing import Any
 
 from aiogram import Bot, F, Router, types
+from aiogram.exceptions import TelegramForbiddenError
 from aiogram.filters.state import StateFilter
 from aiogram.fsm.context import FSMContext
 
@@ -162,8 +164,9 @@ class EmailRouter(Router):
         destination_chat_id: int | str,
         state_data: dict[str, Any],
     ) -> None:
-        await self.__bot.send_message(
-            chat_id=destination_chat_id,
-            text=state_data.email_text,
-            parse_mode="html",
-        )
+        with contextlib.suppress(TelegramForbiddenError):
+            await self.__bot.send_message(
+                chat_id=destination_chat_id,
+                text=state_data.email_text,
+                parse_mode="html",
+            )

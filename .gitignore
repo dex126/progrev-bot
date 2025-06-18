@@ -13,4 +13,5 @@ wheels/
 mongo/
 
 # Other
-template/
+src/nutrabot/telegram/template/
+src/nutrabot/telegram/routers/secret/
